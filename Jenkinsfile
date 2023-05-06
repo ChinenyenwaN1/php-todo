@@ -69,12 +69,12 @@ pipeline {
             withSonarQubeEnv('sonarqube') {
                 sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
             }
-            timeout(time: 1, unit: 'MINUTES') {
+            timeout(time: 2, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
             }
         }
     }
-    
+
     stage ('Package Artifact') {
     steps {
             sh 'zip -qr php-todo.zip ${WORKSPACE}/*'
